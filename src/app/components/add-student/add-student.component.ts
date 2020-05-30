@@ -20,6 +20,7 @@ export class AddStudentComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
+  selected ='';
   @ViewChild('chipList', {static:false}) chipList;
   @ViewChild('resetStudentForm',{static:false}) myNgForm;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
