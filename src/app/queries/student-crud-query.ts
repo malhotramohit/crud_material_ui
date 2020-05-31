@@ -47,13 +47,12 @@ mutation updatemutation($set: students_set_input!, $where : students_bool_exp!){
 `;
 
 export const DeleteMutation = gql`
-  mutation DeleteMutation($where: todo_list_bool_exp!) {
-      delete_todo_list(
-        where: $where
-      ) {
-        affected_rows
-        returning {
-          id
-        }
+mutation ($where : students_bool_exp!) {
+    delete_students(where: $where){
+      affected_rows
+      returning{
+        student_id
       }
-    }`;
+    }
+  }
+  `;

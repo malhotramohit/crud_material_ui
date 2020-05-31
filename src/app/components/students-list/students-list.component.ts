@@ -13,7 +13,7 @@ import { resolve, reject } from 'q';
 export class StudentsListComponent implements OnInit {
   StudentData: any = [];
   dataSource: MatTableDataSource<Student>;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   displayedColumns: string[] = ['student_id', 'student_name', 'student_email', 'section', 'action'];
 
   constructor(private studentApi: ApiService) {
@@ -24,24 +24,11 @@ export class StudentsListComponent implements OnInit {
     //     this.dataSource.paginator = this.paginator;
     //   }, 0);
     // })    
-    
-  }
-  
-  ngOnInit() { 
-    
-    this.studentApi.getStudents1().valueChanges.subscribe(
-      ({ data }) => {
-        console.log("ngOnInit ::"+data)
-        console.log("ngOnInit ::"+data['students'])
-        this.StudentData = data['students'];
-        this.dataSource = new MatTableDataSource<Student>(this.StudentData);
-        setTimeout(() => {
-          this.dataSource.paginator = this.paginator;
-        }, 1);
-      }
-    )
 
-   // this.getAllStudents();
+  }
+
+  ngOnInit() {
+    this.getAllStudents();
   }
 
   deleteStudent(index: number, e) {
@@ -49,23 +36,30 @@ export class StudentsListComponent implements OnInit {
       const data = this.dataSource.data;
       data.splice((this.paginator.pageIndex * this.paginator.pageSize) + index, 1);
       this.dataSource.data = data;
-      //this.studentApi.DeleteStudent(e._id).subscribe()
+      this.studentApi.deleteStudentById(e.student_id).subscribe(() => {
+        //this.getAllStudents();
+      })
+
+      //this.studentApi.deleteStudentById(e.student_id);
+      //this.getAllStudents();
+      // this.ngOnInit();
+
     }
   }
 
-   getAllStudents(){
+  getAllStudents() {
 
-    this.studentApi.getStudents().subscribe(
-      data => {
-        console.log(data)
-        this.StudentData = data;
+    this.studentApi.getStudents1().valueChanges.subscribe(
+      ({ data }) => {
+        console.log("ngOnInit ::" + data)
+        console.log("ngOnInit ::" + data['students'])
+        this.StudentData = data['students'];
         this.dataSource = new MatTableDataSource<Student>(this.StudentData);
         setTimeout(() => {
           this.dataSource.paginator = this.paginator;
-        }, 0);
+        }, 1);
       }
     )
-
   }
 
 }

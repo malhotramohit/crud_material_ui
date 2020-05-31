@@ -81,4 +81,18 @@ export class GraphqlApiService {
     );
   }
 
+  deleteStudentById(sid:number){
+    return this.apollo.mutate({
+      fetchPolicy : "no-cache",
+      mutation : Query.DeleteMutation,
+      variables : {
+        "where": {
+          "student_id": {
+            "_eq": sid
+          }
+        }
+      }
+    });
+  }
+
 }

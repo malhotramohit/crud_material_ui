@@ -31,4 +31,7 @@ export class ApiService {
   async updateStudentById(sid: number, stdObj: Student) {
     return this.graphqlApiService.updateStudentById(sid,stdObj);
   }
+   deleteStudentById(sid:number){
+    return this.graphqlApiService.deleteStudentById(sid);
+  }
 }
