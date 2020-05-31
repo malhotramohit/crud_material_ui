@@ -13,7 +13,7 @@ import { resolve, reject } from 'q';
 export class StudentsListComponent implements OnInit {
   StudentData: any = [];
   dataSource: MatTableDataSource<Student>;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayedColumns: string[] = ['student_id', 'student_name', 'student_email', 'section', 'action'];
 
   constructor(private studentApi: ApiService) {
@@ -24,6 +24,11 @@ export class StudentsListComponent implements OnInit {
     //     this.dataSource.paginator = this.paginator;
     //   }, 0);
     // })    
+    
+  }
+  
+  ngOnInit() { 
+    
     this.studentApi.getStudents1().valueChanges.subscribe(
       ({ data }) => {
         console.log("ngOnInit ::"+data)
@@ -35,11 +40,6 @@ export class StudentsListComponent implements OnInit {
         }, 1);
       }
     )
-
-  }
-
-  ngOnInit() { 
-  
 
    // this.getAllStudents();
   }

@@ -21,8 +21,8 @@ export class AddStudentComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   selected ='';
-  @ViewChild('chipList', {static:false}) chipList;
-  @ViewChild('resetStudentForm',{static:false}) myNgForm;
+  @ViewChild('chipList', {static:true}) chipList;
+  @ViewChild('resetStudentForm',{static:true}) myNgForm;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   studentForm: FormGroup;
   subjectArray: Subject[] = [];

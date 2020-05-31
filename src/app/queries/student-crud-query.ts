@@ -14,6 +14,20 @@ query{
   }
 `;
 
+export const GetQueryById = gql`
+    query($sid:Int!){
+        students(where: {student_id: {_eq: $sid}}) {
+        student_id
+        dob
+        gender
+        section
+        student_email
+        student_name
+        subjects
+        }
+    }  
+`
+
 export const AddMutation = gql`
             
         mutation($object: [students_insert_input!]!){
@@ -23,22 +37,16 @@ export const AddMutation = gql`
         }
 `;
 
-export const UpdateMutation = gql `
-mutation updateMutation($where: todo_list_bool_exp!, $set: todo_list_set_input!) {
-    update_todo_list(
-      where: $where,
-      _set: $set
-    ) {
-      affected_rows
-      returning {
-        id
-        is_completed
-        text
-      }
-    }
-  }`;
+export const UpdateMutation = gql`
 
-  export const DeleteMutation = gql `
+mutation updatemutation($set: students_set_input!, $where : students_bool_exp!){
+    update_students(_set: $set, where: $where){
+      affected_rows
+    }
+  }  
+`;
+
+export const DeleteMutation = gql`
   mutation DeleteMutation($where: todo_list_bool_exp!) {
       delete_todo_list(
         where: $where

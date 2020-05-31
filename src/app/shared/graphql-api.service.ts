@@ -31,9 +31,10 @@ export class GraphqlApiService {
     );
   }
 
-  getStudents1(){
+  getStudents1() {
     return this.apollo.watchQuery<any>({
-      query: Query.GetQuery
+      query: Query.GetQuery,
+      fetchPolicy : "no-cache"
     });
   }
 
@@ -50,5 +51,34 @@ export class GraphqlApiService {
     })
   }
 
+  getStudentById(sid: number) {
+    return this.apollo.watchQuery<any>({
+      query: Query.GetQueryById,
+      variables: {
+        'sid': sid
+      }
+    });
+
+  }
+
+  updateStudentById(sid: number, stdObj: Student) {
+    this.apollo.mutate({
+      mutation: Query.UpdateMutation,
+      variables: {
+        "where": {
+          "student_id": {
+            "_eq": sid
+          }
+        },
+        "set": stdObj
+      }
+    }).subscribe(({ data }) => {
+      console.log('recieved data :: ' + data);
+    },
+      (error) => {
+        console.log('Could not add due to ' + error);
+      }
+    );
+  }
 
 }

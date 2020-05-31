@@ -23,4 +23,12 @@ export class ApiService {
   getStudents1(){
     return this.graphqlApiService.getStudents1();
   }
+
+  getStudentById(sid:number){
+    return this.graphqlApiService.getStudentById(sid);
+  }
+
+  async updateStudentById(sid: number, stdObj: Student) {
+    return this.graphqlApiService.updateStudentById(sid,stdObj);
+  }
 }
